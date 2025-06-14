@@ -3,7 +3,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import timedelta, datetime
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
-
+from django.contrib.sessions.models import Session
 ROLE_CHOICES = (
     ('student', 'Student'),
     ('teacher', 'Teacher'),
@@ -17,7 +17,7 @@ GENDER_CHOICES = (
 )
 
 class CustomUser(AbstractUser):
-    student_id = models.CharField(max_length=15, unique=True, blank=True, null=True)
+    student_id = models.CharField(max_length=20, unique=True, blank=True, null=True)
     email = models.EmailField(unique=True)
     phone_regex = RegexValidator(
         regex=r'^\+?1?\d{9,15}$',
@@ -36,6 +36,8 @@ class CustomUser(AbstractUser):
     )
     educational_institute = models.CharField(max_length=255, blank=True, null=True)
     profile_photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
+    last_login_ip = models.GenericIPAddressField(null=True, blank=True)
+    session_key = models.CharField(max_length=40, null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'phone_number']
@@ -48,7 +50,7 @@ class CustomUser(AbstractUser):
         return f"{self.email} ({self.get_full_name()})"
 
     def generate_student_id(self):
-        year = datetime.now().year
+        year = timezone.now().year
         # Try to generate a unique ID with retries
         max_attempts = 10
         for attempt in range(max_attempts):
@@ -66,7 +68,7 @@ class CustomUser(AbstractUser):
                 return student_id
         
         # If we've exhausted all attempts, create a truly unique ID using timestamp
-        timestamp = int(datetime.now().timestamp())
+        timestamp = int(timezone.now().timestamp())
         sequence = str(timestamp)[-6:].zfill(6)  # Use last 6 digits of timestamp
         return f'DTA-{year}-{sequence}'
 
@@ -76,6 +78,15 @@ class CustomUser(AbstractUser):
         if self.role == 'student' and not self.student_id:
             self.student_id = self.generate_student_id()
         super().save(*args, **kwargs)
+        
+    def logout_previous_session(self):
+        if self.session_key:
+            try:
+                Session.objects.get(session_key=self.session_key).delete()
+            except Session.DoesNotExist:
+                pass
+            self.session_key = None
+            self.save()
 
 class EmailOTP(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='otps')
