@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Dental Training Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-md">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
+                <p class="mt-2 text-center text-sm text-gray-600">
+                    Welcome back to Dental Training Academy
+                </p>
+            </div>
+
+            <div x-data="{
+                formData: {
+                    email: '',
+                    password: ''
+                },
+                errors: {},
+                
+                validateForm() {
+                    this.errors = {};
+                    let isValid = true;
+                    
+                    if (!this.formData.email) {
+                        this.errors.email = 'Email is required';
+                        isValid = false;
+                    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.formData.email)) {
+                        this.errors.email = 'Please enter a valid email';
+                        isValid = false;
+                    }
+                    
+                    if (!this.formData.password) {
+                        this.errors.password = 'Password is required';
+                        isValid = false;
+                    }
+                    
+                    return isValid;
+                }
+            }">
+                <form method="POST" class="mt-8 space-y-6" @submit.prevent="if(validateForm()) $el.submit()">
+                    {% csrf_token %}
+                    
+                    {% if error %}
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-red-700">{{ error }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if form.errors %}
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-red-700">Please correct the errors below.</p>
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                    <p class="text-sm text-red-700">{{ field.label }}: {{ error }}</p>
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for error in form.non_field_errors %}
+                                <p class="text-sm text-red-700">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Email -->
+                    <div>
+                        <label for="id_email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" name="email" id="id_email" 
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                               x-model="formData.email">
+                        <p x-show="errors.email" x-text="errors.email" class="mt-1 text-sm text-red-600" x-cloak></p>
+                    </div>
+                    
+                    <!-- Password -->
+                    <div>
+                        <label for="id_password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" name="password" id="id_password" 
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                               x-model="formData.password">
+                        <p x-show="errors.password" x-text="errors.password" class="mt-1 text-sm text-red-600" x-cloak></p>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember_me" name="remember_me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                            <label for="remember_me" class="ml-2 block text-sm text-gray-900">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <div class="text-sm">
+                            <a href="{% url 'forgot_password' %}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                                Forgot your password?
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Sign in
+                        </button>
+                    </div>
+                    
+                    <div class="text-center">
+                        <p class="text-sm text-gray-600">
+                            Don't have an account? 
+                            <a href="{% url 'register' %}" class="font-medium text-indigo-600 hover:text-indigo-500">Sign up</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

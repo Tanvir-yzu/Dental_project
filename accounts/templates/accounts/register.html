@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Dental Training Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-md">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your account</h2>
+                <p class="mt-2 text-center text-sm text-gray-600">
+                    Join Dental Training Academy today
+                </p>
+            </div>
+
+            <div x-data="{
+                formData: {
+                    first_name: '',
+                    last_name: '',
+                    email: '',
+                    phone_number: '',
+                    password1: '',
+                    password2: ''
+                },
+                errors: {},
+                passwordStrength: 0,
+                passwordMatch: false,
+                
+                validatePassword() {
+                    this.passwordStrength = 0;
+                    if (this.formData.password1.length >= 8) this.passwordStrength += 1;
+                    if (/[A-Z]/.test(this.formData.password1)) this.passwordStrength += 1;
+                    if (/[0-9]/.test(this.formData.password1)) this.passwordStrength += 1;
+                    if (/[^A-Za-z0-9]/.test(this.formData.password1)) this.passwordStrength += 1;
+                    
+                    this.passwordMatch = this.formData.password1 === this.formData.password2;
+                },
+                
+                validateForm() {
+                    this.errors = {};
+                    let isValid = true;
+                    
+                    if (!this.formData.first_name) {
+                        this.errors.first_name = 'First name is required';
+                        isValid = false;
+                    }
+                    
+                    if (!this.formData.last_name) {
+                        this.errors.last_name = 'Last name is required';
+                        isValid = false;
+                    }
+                    
+                    if (!this.formData.email) {
+                        this.errors.email = 'Email is required';
+                        isValid = false;
+                    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.formData.email)) {
+                        this.errors.email = 'Please enter a valid email';
+                        isValid = false;
+                    }
+                    
+                    if (!this.formData.phone_number) {
+                        this.errors.phone_number = 'Phone number is required';
+                        isValid = false;
+                    } else if (!/^\+?[0-9]{9,15}$/.test(this.formData.phone_number)) {
+                        this.errors.phone_number = 'Please enter a valid phone number';
+                        isValid = false;
+                    }
+                    
+                    if (!this.formData.password1) {
+                        this.errors.password1 = 'Password is required';
+                        isValid = false;
+                    } else if (this.passwordStrength < 3) {
+                        this.errors.password1 = 'Password is too weak';
+                        isValid = false;
+                    }
+                    
+                    if (!this.formData.password2) {
+                        this.errors.password2 = 'Please confirm your password';
+                        isValid = false;
+                    } else if (this.formData.password1 !== this.formData.password2) {
+                        this.errors.password2 = 'Passwords do not match';
+                        isValid = false;
+                    }
+                    
+                    return isValid;
+                }
+            }">
+                <form method="POST" class="mt-8 space-y-6" @submit.prevent="if(validateForm()) $el.submit()">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-red-700">Please correct the errors below.</p>
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                    <p class="text-sm text-red-700">{{ field.label }}: {{ error }}</p>
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for error in form.non_field_errors %}
+                                <p class="text-sm text-red-700">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- First Name -->
+                        <div>
+                            <label for="id_first_name" class="block text-sm font-medium text-gray-700">First Name</label>
+                            <input type="text" name="first_name" id="id_first_name" 
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                   x-model="formData.first_name">
+                            <p x-show="errors.first_name" x-text="errors.first_name" class="mt-1 text-sm text-red-600" x-cloak></p>
+                        </div>
+                        
+                        <!-- Last Name -->
+                        <div>
+                            <label for="id_last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
+                            <input type="text" name="last_name" id="id_last_name" 
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                   x-model="formData.last_name">
+                            <p x-show="errors.last_name" x-text="errors.last_name" class="mt-1 text-sm text-red-600" x-cloak></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div>
+                        <label for="id_email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" name="email" id="id_email" 
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                               x-model="formData.email">
+                        <p x-show="errors.email" x-text="errors.email" class="mt-1 text-sm text-red-600" x-cloak></p>
+                    </div>
+                    
+                    <!-- Phone Number -->
+                    <div>
+                        <label for="id_phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                        <input type="text" name="phone_number" id="id_phone_number" 
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                               placeholder="+1234567890" x-model="formData.phone_number">
+                        <p x-show="errors.phone_number" x-text="errors.phone_number" class="mt-1 text-sm text-red-600" x-cloak></p>
+                    </div>
+                    
+                    <!-- Password -->
+                    <div>
+                        <label for="id_password1" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" name="password1" id="id_password1" 
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                               x-model="formData.password1" @input="validatePassword">
+                        <div class="mt-1 flex">
+                            <div class="h-2 flex-1 rounded-l-full" :class="{'bg-red-400': passwordStrength >= 1, 'bg-gray-200': passwordStrength < 1}"></div>
+                            <div class="h-2 flex-1" :class="{'bg-yellow-400': passwordStrength >= 2, 'bg-gray-200': passwordStrength < 2}"></div>
+                            <div class="h-2 flex-1" :class="{'bg-yellow-500': passwordStrength >= 3, 'bg-gray-200': passwordStrength < 3}"></div>
+                            <div class="h-2 flex-1 rounded-r-full" :class="{'bg-green-500': passwordStrength >= 4, 'bg-gray-200': passwordStrength < 4}"></div>
+                        </div>
+                        <p class="mt-1 text-xs text-gray-500">Password must be at least 8 characters and include uppercase, numbers, and special characters</p>
+                        <p x-show="errors.password1" x-text="errors.password1" class="mt-1 text-sm text-red-600" x-cloak></p>
+                    </div>
+                    
+                    <!-- Confirm Password -->
+                    <div>
+                        <label for="id_password2" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                        <input type="password" name="password2" id="id_password2" 
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                               x-model="formData.password2" @input="validatePassword">
+                        <p x-show="formData.password2 && !passwordMatch" class="mt-1 text-sm text-red-600">Passwords do not match</p>
+                        <p x-show="errors.password2" x-text="errors.password2" class="mt-1 text-sm text-red-600" x-cloak></p>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Register
+                        </button>
+                    </div>
+                    
+                    <div class="text-center">
+                        <p class="text-sm text-gray-600">
+                            Already have an account? 
+                            <a href="{% url 'login' %}" class="font-medium text-indigo-600 hover:text-indigo-500">Sign in</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
