@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dental Training Academy{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-100">
+
+    {% include 'home/nav/navber.html' %}
+    {% include 'home/nav/HeroSectionber.html' %}
+
+    <main class="container mx-auto px-6 py-8">
+        {% if user.is_authenticated and messages %}
+            <div class="mb-4" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 2000)">
+                {% for message in messages %}
+                    <div class="p-4 {% if message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %} rounded">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% include 'home/footer/footer.html' %}
+</body>
+</html>

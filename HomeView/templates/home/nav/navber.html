@@ -1,0 +1,101 @@
+<nav class="bg-white shadow-lg sticky top-0 z-50" x-data="{ isOpen: false }">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <a href="{% url 'home' %}" class="flex items-center space-x-2">
+          <div class="w-8 h-8 dental-gradient rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-sm">🦷</span>
+          </div>
+          <span class="font-bold text-xl text-dental-navy">Dental Training Academy</span>
+        </a>
+  
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="{% url 'home' %}" class="text-gray-700 hover:text-dental-blue transition-colors duration-200 font-medium">Home</a>
+          <!-- Temporarily using href until courses URL is implemented -->
+          <a href="#" class="text-gray-700 hover:text-dental-blue transition-colors duration-200 font-medium">Courses</a>
+          <!-- Temporarily using href until about URL is implemented -->
+          <a href="#" class="text-gray-700 hover:text-dental-blue transition-colors duration-200 font-medium">About</a>
+          <!-- Temporarily using href until verify-certificate URL is implemented -->
+          <a href="#" class="text-gray-700 hover:text-dental-blue transition-colors duration-200 font-medium">Verify Certificate</a>
+        </div>
+  
+        <!-- Desktop Auth Buttons -->
+        <div class="hidden md:flex items-center space-x-4">
+          {% if user.is_authenticated %}
+            <span class="mr-4 text-gray-600">Welcome, {{ user.email }}</span>
+            <a href="{% url 'profile' %}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Profile
+            </a>
+            <a href="{% url 'logout' %}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-md">
+              Logout
+            </a>
+          {% else %}
+            <a href="{% url 'login' %}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Sign In
+            </a>
+            <a href="{% url 'register' %}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-black bg-dental-blue hover:bg-dental-blue-dark rounded-md">
+              Get Started
+            </a>
+          {% endif %}
+        </div>
+  
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button @click="isOpen = !isOpen" class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900">
+            <svg x-show="!isOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg x-show="isOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+  
+      <!-- Mobile Menu -->
+      <div x-show="isOpen" class="md:hidden py-4" style="display: none;">
+        <div class="flex flex-col space-y-4">
+          <a href="{% url 'home' %}" @click="isOpen = false" class="text-gray-700 hover:text-dental-blue transition-colors duration-200 font-medium px-2 py-1">Home</a>
+          <a href="#" @click="isOpen = false" class="text-gray-700 hover:text-dental-blue transition-colors duration-200 font-medium px-2 py-1">Courses</a>
+          <a href="#" @click="isOpen = false" class="text-gray-700 hover:text-dental-blue transition-colors duration-200 font-medium px-2 py-1">About</a>
+          <a href="#" @click="isOpen = false" class="text-gray-700 hover:text-dental-blue transition-colors duration-200 font-medium px-2 py-1">Verify Certificate</a>
+          
+          <div class="flex flex-col space-y-2 pt-4 border-t">
+            {% if user.is_authenticated %}
+              <span class="text-gray-600 px-2 py-1">Welcome, {{ user.email }}</span>
+              <a href="{% url 'profile' %}" @click="isOpen = false" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 w-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Profile
+              </a>
+              <a href="{% url 'logout' %}" @click="isOpen = false" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-md w-full">
+                Logout
+              </a>
+            {% else %}
+              <a href="{% url 'login' %}" @click="isOpen = false" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 w-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Sign In
+              </a>
+              <a href="{% url 'register' %}" @click="isOpen = false" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-dental-blue hover:bg-dental-blue-dark rounded-md w-full">
+                Get Started
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>

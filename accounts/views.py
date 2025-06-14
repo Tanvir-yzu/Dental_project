@@ -91,7 +91,7 @@ class LoginView(View):
                 user.save()
                 
                 messages.success(request, f'Welcome back, {user.first_name}!')
-                return redirect('profile')
+                return redirect('home')
             else:
                 # Invalid credentials
                 messages.error(request, 'Invalid credentials')

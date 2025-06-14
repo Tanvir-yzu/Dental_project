@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'accounts',
+    'HomeView'
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

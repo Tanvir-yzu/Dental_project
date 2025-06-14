@@ -1,0 +1,373 @@
+<!-- Hero Section with Modal -->  
+<section class="relative bg-gradient-to-br from-blue-50 to-indigo-100 py-20" x-data="{ showModal: false }">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="inline-block mb-4 px-4 py-2 bg-blue-100 text-blue-700 hover:bg-blue-200 rounded-full text-sm font-medium">
+                    Trusted by 5,000+ Dental Professionals
+                </span>
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                    Master Dental Procedures with 
+                    <span class="text-blue-600"> Hands-On Training</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                    Learn from expert dentists through video-based assignments, receive personalized feedback, 
+                    and earn verifiable certificates that advance your career.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button @click="showModal = true" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition duration-200">
+                        Start Learning Today
+                    </button>
+                    <button class="px-8 py-3 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 rounded-lg font-medium transition duration-200">
+                        Browse Courses
+                    </button>
+                </div>
+                <div class="flex items-center gap-6 mt-8 text-sm text-gray-600">
+                    <div class="flex items-center gap-1">
+                        <svg class="h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Video homework review
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <svg class="h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Expert instructor feedback
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <svg class="h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Verified certificates
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <img 
+                    src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=600&h=400&fit=crop" 
+                    alt="Dental training in progress"
+                    class="rounded-2xl shadow-2xl"
+                />
+                <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-green-100 p-2 rounded-full">
+                            <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-semibold">2,847 Certificates Issued</div>
+                            <div class="text-sm text-gray-600">This month</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for "Start Learning Today" button -->
+    <div x-show="showModal" 
+         class="fixed inset-0 z-50 overflow-y-auto" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         style="display: none;">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75" @click="showModal = false"></div>
+            </div>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                Get Started with Dental Training Academy
+                            </h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500">
+                                    Sign up now to access our premium dental training courses and start your journey to becoming a better dental professional.
+                                </p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="{% url 'register' %}" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:w-auto sm:text-sm">
+                                    Create Account
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" @click="showModal = false" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="max-w-6xl mx-auto px-4 py-12">
+    <div class="text-center mb-12">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4">Why Choose Our Platform?</h1>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        Experience the most effective way to learn dental procedures through hands-on video training.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Feature 1: Video-Based Learning -->
+      <div class="text-center p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex justify-center mb-4">
+          <img src="https://img.icons8.com/fluency/48/video-play-button.png"  alt="Video Icon" class="w-12 h-12" />
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Video-Based Learning</h3>
+        <p class="text-gray-600">
+          Submit hands-on procedure videos and receive detailed feedback from expert instructors.
+        </p>
+      </div>
+
+      <!-- Feature 2: Expert Instructors -->
+      <div class="text-center p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex justify-center mb-4">
+          <img src="https://img.icons8.com/fluency/48/person-male.png"  alt="Person Icon" class="w-12 h-12" />
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Expert Instructors</h3>
+        <p class="text-gray-600">
+          Learn from board-certified dentists with years of clinical and teaching experience.
+        </p>
+      </div>
+
+      <!-- Feature 3: Verifiable Certificates -->
+      <div class="text-center p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex justify-center mb-4">
+          <img src="https://img.icons8.com/fluency/48/certificate.png"  alt="Certificate Icon" class="w-12 h-12" />
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Verifiable Certificates</h3>
+        <p class="text-gray-600">
+          Earn industry-recognized certificates with unique verification codes and QR authentication.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+<!-- Featured Courses -->
+<section class="py-20 bg-gray-50" x-data="{
+    featuredCourses: [
+        {
+            id: 1,
+            image: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=500&h=350&fit=crop',
+            level: 'Beginner',
+            rating: '4.9',
+            students: '1,245',
+            price: '$199',
+            title: 'Dental Implant Fundamentals',
+            description: 'Master the basics of dental implant procedures with hands-on training',
+            duration: '8 weeks',
+            instructor: 'Dr. Sarah Johnson'
+        },
+        {
+            id: 2,
+            image: 'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=500&h=350&fit=crop',
+            level: 'Intermediate',
+            rating: '4.8',
+            students: '987',
+            price: '$249',
+            title: 'Advanced Cosmetic Dentistry',
+            description: 'Learn cutting-edge techniques for aesthetic dental procedures',
+            duration: '10 weeks',
+            instructor: 'Dr. Michael Chen'
+        },
+        {
+            id: 3,
+            image: 'https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=500&h=350&fit=crop',
+            level: 'Advanced',
+            rating: '4.7',
+            students: '756',
+            price: '$299',
+            title: 'Endodontic Therapy Mastery',
+            description: 'Perfect your root canal techniques with expert guidance',
+            duration: '12 weeks',
+            instructor: 'Dr. Lisa Patel'
+        }
+    ]
+}">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Featured Courses</h2>
+            <p class="text-xl text-gray-600">
+                Master essential dental procedures with our most popular training programs
+            </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <template x-for="course in featuredCourses" :key="course.id">
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="relative">
+                        <img :src="course.image" :alt="course.title" class="w-full h-48 object-cover">
+                        <span class="absolute top-4 left-4 bg-white text-gray-800 px-2 py-1 rounded text-sm font-medium" x-text="course.level"></span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-1">
+                                <svg class="h-4 w-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                </svg>
+                                <span class="text-sm font-medium" x-text="course.rating"></span>
+                                <span class="text-sm text-gray-600" x-text="'(' + course.students + ' students)'"></span>
+                            </div>
+                            <span class="text-2xl font-bold text-blue-600" x-text="course.price"></span>
+                        </div>
+                        <h3 class="text-xl font-semibold leading-tight mb-2" x-text="course.title"></h3>
+                        <p class="text-gray-600 mb-4" x-text="course.description"></p>
+                        <div class="flex items-center justify-between text-sm text-gray-600 mb-4">
+                            <div class="flex items-center gap-1">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span x-text="course.duration"></span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                                <span x-text="'By ' + course.instructor"></span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition duration-200">
+                            Enroll Now
+                        </button>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <div class="text-center mt-12">
+            <button class="px-6 py-3 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 rounded-lg font-medium transition duration-200">
+                View All Courses
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="max-w-[1400px] mx-auto px-4 py-12">
+    <div class="text-center mb-12">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4">What Our Students Say</h1>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        Join hundreds of dental professionals who have advanced their careers through our comprehensive training programs.
+      </p>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+      
+      <!-- Testimonial 1 -->
+      <div class="p-6 rounded-lg border border-gray-200 shadow-sm">
+        <div class="flex items-center mb-4">
+          <span class="text-yellow-400 mr-2">
+            ⭐⭐⭐⭐⭐
+          </span>
+        </div>
+        <p class="text-gray-600 mb-4">
+          "The hands-on video assignments were incredible. Getting personalized feedback from expert instructors helped me refine my techniques significantly."
+        </p>
+        <div class="flex items-center">
+          <img src="https://img.icons8.com/fluency/48/dentist.png"  alt="Avatar" class="w-8 h-8 rounded-full mr-2" />
+          <div>
+            <strong class="text-gray-800">Dr. Jennifer Martinez</strong>
+            <p class="text-gray-500">General Dentist<br />Miami, FL</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="p-6 rounded-lg border border-gray-200 shadow-sm">
+        <div class="flex items-center mb-4">
+          <span class="text-yellow-400 mr-2">
+            ⭐⭐⭐⭐⭐
+          </span>
+        </div>
+        <p class="text-gray-600 mb-4">
+          "This platform transformed how I approach continuing education. The certificate verification system gives real credibility to my achievements."
+        </p>
+        <div class="flex items-center">
+          <img src="https://img.icons8.com/fluency/48/oral-surgeon.png"  alt="Avatar" class="w-8 h-8 rounded-full mr-2" />
+          <div>
+            <strong class="text-gray-800">Dr. Robert Kim</strong>
+            <p class="text-gray-500">Oral Surgeon<br />Seattle, WA</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="p-6 rounded-lg border border-gray-200 shadow-sm">
+        <div class="flex items-center mb-4">
+          <span class="text-yellow-400 mr-2">
+            ⭐⭐⭐⭐⭐
+          </span>
+        </div>
+        <p class="text-gray-600 mb-4">
+          "Excellent course structure and the manual grading system ensures quality feedback. Highly recommend to any dental professional."
+        </p>
+        <div class="flex items-center">
+          <img src="https://img.icons8.com/fluency/48/pediatric-dentist.png"  alt="Avatar" class="w-8 h-8 rounded-full mr-2" />
+          <div>
+            <strong class="text-gray-800">Dr. Amanda Foster</strong>
+            <p class="text-gray-500">Pediatric Dentist<br />Austin, TX</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      
+      <!-- Statistic 1 -->
+      <div class="text-center">
+        <h2 class="text-3xl font-bold text-blue-500">500+</h2>
+        <p class="text-gray-600">Students Trained</p>
+      </div>
+
+      <!-- Statistic 2 -->
+      <div class="text-center">
+        <h2 class="text-3xl font-bold text-green-500">98%</h2>
+        <p class="text-gray-600">Completion Rate</p>
+      </div>
+
+      <!-- Statistic 3 -->
+      <div class="text-center">
+        <h2 class="text-3xl font-bold text-yellow-500">4.9</h2>
+        <p class="text-gray-600">Average Rating</p>
+      </div>
+
+      <!-- Statistic 4 -->
+      <div class="text-center">
+        <h2 class="text-3xl font-bold text-indigo-500">24/7</h2>
+        <p class="text-gray-600">Expert Support</p>
+      </div>
+    </div>
+  </section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-blue-600 text-white">
+    <div class="max-w-[1400px] mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+            Ready to Advance Your Dental Skills?
+        </h2>
+        <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+            Join thousands of dental professionals who have enhanced their practice through our hands-on training programs
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button class="px-8 py-3 bg-white text-blue-600 hover:bg-gray-100 rounded-lg font-medium transition duration-200">
+                Browse All Courses
+            </button>
+            <button class="px-8 py-3 border-2 border-white text-white hover:bg-white hover:text-blue-600 rounded-lg font-medium transition duration-200">
+                Schedule a Demo
+            </button>
+        </div>
+    </div>
+</section>
